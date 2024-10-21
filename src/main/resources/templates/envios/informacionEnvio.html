@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Informacion Envio</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg color-nav">
+		<div class="container-fluid">
+			<a class="navbar-brand crecer" th:href="@{/inicio}">SmartShip</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="ms-auto navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link crecer" aria-current="page" th:href="@{/inicio}">Inicio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/envios/registrar}">Generar Envio</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle active crecer" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Gestion
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item crecer active" th:href="@{/envios/listar}">Envios</a></li>
+							<li><a class="dropdown-item crecer" th:href="@{/clientes/listar}">Clientes</a></li>
+							<li th:if="${session.usuario.usuarioRol.rol == 'admind'}"><a class="  dropdown-item crecer" th:href="@{/usuarios/listar}">Empleados</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/cuenta/cuenta}">Cuenta</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-item btn btn-outline-danger" th:href="@{/logout}">Cerrar
+							Sesión</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container mt-2">
+		<h1>Información del Envio</h1>
+		<div class="card p-3">
+			<div class="card-body">
+				<div class="mb-3">
+					<p class="fw-bold ">Id:</p>
+					<p class=" ms-2" th:text="${envio.id}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Codigo:</p>
+					<p class=" ms-2" id="codigo" th:text="${envio.codigo}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Usuario:</p>
+					<p class=" ms-2" th:text="${envio.usuario}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Enviante:</p>
+					<p class=" ms-2" th:text="${envio.enviante}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Receptor:</p>
+					<p class=" ms-2" id="nombre" th:text="${envio.receptor}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Descripcion:</p>
+					<p class=" ms-2" th:text="${envio.descripcion}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Direccion Salida:</p>
+					<p class=" ms-2" th:text="${envio.direccionSalida}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Direccion Envio:</p>
+					<p class=" ms-2" th:text="${envio.direccionEnvio}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Telefono Contacto:</p>
+					<p class=" ms-2" th:text="${envio.telefonoContacto}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Correo:</p>
+					<p class=" ms-2" id="correo" th:text="${envio.correo}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Estado Pago:</p>
+					<p class=" ms-2" th:text="${envio.estadoPago}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Costo Envio:</p>
+					<p class=" ms-2" th:text="${envio.costoEnvio}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Metodo Pago:</p>
+					<p class=" ms-2" th:text="${envio.metodoPago}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Estado Envio:</p>
+					<p class=" ms-2" id="estadoEnvio" th:text="${envio.estadoEnvio}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Tipo Envio:</p>
+					<p class=" ms-2" th:text="${envio.tipoEnvio}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Estado:</p>
+					<p class=" ms-2" th:text="${envio.estado ? 'Activo' : 'Desactivo'}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Fecha Registro:</p>
+					<p class=" ms-2" th:text="${envio.fechaRegistro}"></p>
+				</div>
+				<div class="mb-3">
+					<p class="fw-bold ">Fecha Modificacion:</p>
+					<p class=" ms-2" th:text="*{envio.fechaModificacion}"></p>
+				</div>
+				<a th:href="@{/envios/listar}" class="btn btn-primary me-2">Regresar a la Lista</a>
+				<a th:href="@{/envios/editar/{id}(id=${envio.id})}" class="btn btn-warning">Editar</a>
+				<button onclick="enviarCorreo()" class="btn btn-success">Enviar Correo</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+		<script type="text/javascript"
+		  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+		    <script type="text/javascript">
+		        (function(){
+		            emailjs.init("YgC0eDRxF6iXT6xpP");
+		        })();
+
+		        function enviarCorreo() {
+					var envioCorreo = document.getElementById("correo").textContent;
+					   var envioCodigo = document.getElementById("codigo").textContent;
+					   var envioEstado = document.getElementById("estadoEnvio").textContent;
+					   var nombre = document.getElementById("nombre").textContent;
+					   let envio = {
+					               correo: envioCorreo,
+					               codigo: envioCodigo,
+					               estadoEnvio: envioEstado,
+								   nombre: nombre
+					           };
+							   console.log(envio.correo);
+							   console.log(envio.codigo);
+							   console.log(envio.estadoEnvio);
+		            let templateParams = {
+		                from_name: "Empresa envios SmartShip",
+		                to_email: envio.correo,
+		                message: `Hola, ${envio.nombre} tu pedido con codigo ${envio.codigo} esta ${envio.estadoEnvio}`
+		            };
+
+		            emailjs.send("service_zku348k", "template_rd9rj7j", templateParams)
+		                .then(function(response) {
+		                   console.log("Correo enviado con éxito", response.status, response.text);
+		                }, function(error) {
+		                   console.log("Error al enviar el correo", error);
+		                });
+		        }
+		    </script>
+</body>
+
+</html>
