@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Listar cliente</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg color-nav">
+		<div class="container-fluid">
+			<a class="navbar-brand crecer" th:href="@{/inicio}">SmartShip</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="ms-auto navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link crecer" aria-current="page" th:href="@{/inicio}">Inicio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/envios/registrar}">Generar Envio</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle active crecer" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Gestion
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item crecer" th:href="@{/envios/listar}">Envios</a></li>
+							<li><a class="dropdown-item active crecer" th:href="@{/clientes/listar}">Clientes</a></li>
+							<li th:if="${session.usuario.usuarioRol.rol == 'admind'}"><a class="dropdown-item crecer" th:href="@{/usuarios/listar}">Empleados</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/cuenta/cuenta}">Cuenta</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-item btn btn-outline-danger" th:href="@{/logout}">Cerrar
+							Sesión</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="mt-3 container">
+		<h1>Lista Clientes</h1>
+		<hr>
+		<div class="mb-4">
+			<a th:href="@{/clientes/registrar}" class="btn btn-primary">Nuevo Cliente</a>
+		</div>
+		<hr>
+		<h4 class="mb-2">Opciones de Busqueda</h4>
+		<form class="d-flex align-items-center" method="get" th:action="@{/clientes/listar}">
+			<div class="me-2">
+				<input type="text" class="form-control" name="dni" id="dni" th:value="${dni}" placeholder="Ingrese DNI">
+			</div>
+
+			<div class="me-2">
+				<input type="text" class="form-control" name="nombre" id="nombre" th:value="${nombre}"
+					placeholder="Ingrese nombre">
+			</div>
+
+			<div class="me-2">
+				<input type="text" class="form-control" name="apellido" id="apellido" th:value="${apellido}"
+					placeholder="Ingrese Apellido">
+			</div>
+
+			<button type="submit" class="btn btn-primary">Buscar</button>
+		</form>
+		<hr>
+		<table class="table table-bordered table-striped">
+			<thead class="table-primary">
+				<tr>
+					<th>Codigo</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Telefono</th>
+					<th>Dni</th>
+					<th>Fecha Registro</th>
+					<th>Fecha Modificicacion</th>
+					<th>Estado</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="align-middle" th:each="c: ${listaclientes}">
+					<td th:text="${c.codigo}"></td>
+					<td th:text="${c.nombre}"></td>
+					<td th:text="${c.apellido}"></td>
+					<td th:text="${c.telefono}"></td>
+					<td th:text="${c.dni}"></td>
+					<td th:text="${c.fechaRegistro}"></td>
+					<td th:text="${c.fechaModificacion}"></td>
+					<td th:text="${c.estado == true ? 'Activo' : 'Inactivo'}"></td>
+
+
+					<td class="text-center">
+						<a th:href="@{/clientes/informacion/{codigo}(codigo=${c.codigo})}" class="btn btn-primary">
+							<i class="fa-solid fa-info"></i>
+						</a>
+						<a th:href="@{/clientes/editar/{codigo}(codigo=${c.codigo})}" class="btn btn-warning">
+							<i class=" fa-solid fa-edit"></i>
+						</a>
+						<a th:href="@{/clientes/eliminar/{codigo}(codigo=${c.codigo})}" class="btn btn-danger">
+							<i class=" fa-solid fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-center">
+			<a th:each="i : ${#numbers.sequence(0, npags > 0 ? npags - 1 : npags)}"
+				th:href="@{/clientes/listar(p=${i}, dni=${dni != null ? dni : ''}, nombre=${nombre != null ? nombre : ''}, apellido=${apellido != null ? apellido : ''})}"
+				class="btn btn-success fw-bold m-2" th:text="${i + 1}">
+			</a>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

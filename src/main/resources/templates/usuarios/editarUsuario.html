@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Editar Usuario</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg color-nav">
+		<div class="container-fluid">
+			<a class="navbar-brand crecer" th:href="@{/inicio}">SmartShip</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="ms-auto navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active crecer" aria-current="page" th:href="@{/inicio}">Inicio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/envios/registrar}">Generar Envio</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle active crecer" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Gestion
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item crecer" th:href="@{/envios/listar}">Envios</a></li>
+							<li><a class="dropdown-item crecer" th:href="@{/clientes/listar}">Clientes</a></li>
+							<li th:if="${session.usuario.usuarioRol.rol == 'admind'}"><a class="active dropdown-item crecer" th:href="@{/usuarios/listar}">Empleados</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link crecer" th:href="@{/cuenta/cuenta}">Cuenta</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-item btn btn-outline-danger" th:href="@{/logout}">Cerrar
+							Sesión</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container mt-3">
+		<h1>Editar cliente</h1>
+		<hr>
+		<div>
+			<form class="col-md-6" method="post" th:object="${usuario}"
+				th:action="@{/usuarios/editar/{id}(id=${usuario.id})}">
+				<div class="form-group  mb-3">
+					<label>Id</label>
+					<input type="text" name="id" required th:field="*{id}" class="form-control">
+				</div>
+				<div class="form-group  mb-3">
+					<label>Nombre</label>
+					<input type="text" name="nombre" required th:field="*{nombre}" class="form-control">
+				</div>
+				<div class="form-group mb-3">
+					<label>Telefono</label>
+					<input type="text" name="telefono" required th:field="*{telefono}" class="form-control">
+				</div>
+				<div class="form-group mb-3">
+					<label>Dni</label>
+					<input type="text" name="dni" required th:field="*{dni}" class="form-control">
+				</div>
+				<div class="form-group mb-3">
+					<label>codigo</label>
+					<input type="text" name="codigo" required th:field="*{codigo}" class="form-control">
+				</div>
+				<div class="form-group mb-3">
+					<label>password</label>
+					<input type="text" required name="password" th:field="*{password}" class="form-control">
+				</div>
+				<div class="form-group mb-3">
+					<label>
+						Rol
+					</label>
+					<select name="usuarioRol" required th:field="*{usuarioRol}" class="form-select">
+						<option th:text="${ur.rol}" th:value="${ur.id}" th:each="ur: ${listaUsuarioRol}">
+						</option>
+					</select>
+				</div>
+
+				<div class="form-group mb-3">
+					<label>Estado</label>
+					<input type="checkbox" name="estado" th:field="*{estado}" class="">
+				</div>
+				<div class="m-2">
+					<button class="btn btn-primary" type="submit">Editar</button>
+					<a th:href="@{/usuarios/listar}" class="btn btn-success me-2">Regresar a la Lista</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

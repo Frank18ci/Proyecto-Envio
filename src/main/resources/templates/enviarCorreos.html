@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar correo</title>
+    <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("YgC0eDRxF6iXT6xpP");
+        })();
+
+        function enviarCorreo() {
+            let templateParams = {
+                from_name: "Empresa envios",
+                to_email: "fcarpio113@gmail.com",
+                message: "Hola, tu pedido con codigo 553634 ya esta listo para recoger"
+            };
+
+            emailjs.send("service_zku348k", "template_rd9rj7j", templateParams)
+                .then(function(response) {
+                   console.log("Correo enviado con éxito", response.status, response.text);
+                }, function(error) {
+                   console.log("Error al enviar el correo", error);
+                });
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Enviar correo desde JavaScript</h1>
+    <button onclick="enviarCorreo()">Enviar Correo</button>
+
+</body>
+</html>
