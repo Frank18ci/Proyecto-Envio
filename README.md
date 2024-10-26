@@ -1,0 +1,1 @@
+para el funcionamiento de busqueda por dni en la session de clientes se recomienda usar https://cors-anywhere.herokuapp.com/corsdemo precionar Request temporary access to the demo server para poder consultar 
