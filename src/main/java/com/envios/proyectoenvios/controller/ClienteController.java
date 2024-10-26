@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.envios.proyectoenvios.model.Cliente;
+import com.envios.proyectoenvios.model.Usuario;
 import com.envios.proyectoenvios.repository.IClienteRepository;
 import com.envios.proyectoenvios.service.ClienteService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -27,7 +30,9 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@GetMapping("/listar")
-	public String getClientes(Model model, String dni, String nombre, String apellido, Integer p) {
+	public String getClientes(Model model, String dni, String nombre, String apellido, Integer p, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		if(p == null) {
 			p = 0;
 		}
@@ -49,20 +54,26 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/informacion/{codigo}")
-	public String informacionCliente(@PathVariable int codigo, Model model) {
+	public String informacionCliente(@PathVariable int codigo, Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
 		return "/clientes/informacionCliente";
 	}
 
 	@GetMapping("/registrar")
-	public String getRegitrar(Model model) {
+	public String getRegitrar(Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		model.addAttribute("cliente", new Cliente());
 		return "/clientes/ingresarCliente";
 	}
 
 	@PostMapping("/registrar")
-	public String registrarCliente(@ModelAttribute Cliente cliente, Model model) {
+	public String registrarCliente(@ModelAttribute Cliente cliente, Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		cliente.setFechaRegistro(new Date());
 		cliente.setFechaModificacion(new Date());
 		if(clienteRepository.buscarClienteDNI(cliente.getDni()) != null) {
@@ -75,14 +86,18 @@ public class ClienteController {
 	}
 
 	@GetMapping("/editar/{codigo}")
-	public String getEditar(@PathVariable int codigo, Model model) {
+	public String getEditar(@PathVariable int codigo, Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
 		return "/clientes/editarCliente";
 	}
 
 	@PostMapping("/editar/{codigo}")
-	public String editarCliente(@PathVariable int codigo, @ModelAttribute Cliente cliente) {
+	public String editarCliente(@PathVariable int codigo, @ModelAttribute Cliente cliente, Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		Cliente clienteA = clienteRepository.findById(codigo).get();
 		clienteA.setNombre(cliente.getNombre());
 		clienteA.setApellido(cliente.getApellido());
@@ -95,7 +110,9 @@ public class ClienteController {
 	}
 
 	@GetMapping("/eliminar/{codigo}")
-	public String actualizarEstudiante(@PathVariable int codigo) {
+	public String actualizarEstudiante(@PathVariable int codigo, Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.addAttribute("usuario", usuario);
 		clienteRepository.deleteById(codigo);
 		return "redirect:/clientes/listar";
 	}
