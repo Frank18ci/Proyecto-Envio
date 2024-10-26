@@ -28,6 +28,8 @@ public interface IEnvioRepository extends JpaRepository<Envio, Integer> {
 			+ "WHERE e.id = ?1")
 	public VistaEnvio buscarEnvio(int id);
 	
+	
+	
 	@Query("SELECT e FROM Envio e where e.codigo = ?1")
 	public Envio buscarCodigo(String codigo);
 	@Query("SELECT e FROM Envio e where e.correo = ?1")

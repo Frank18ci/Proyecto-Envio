@@ -67,6 +67,7 @@ public class ClienteController {
 		cliente.setFechaModificacion(new Date());
 		if(clienteRepository.buscarClienteDNI(cliente.getDni()) != null) {
 			model.addAttribute("cliente", cliente);
+			model.addAttribute("error", true);
 			return "/clientes/ingresarCliente";
 		}
 		clienteRepository.save(cliente);

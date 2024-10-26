@@ -15,6 +15,11 @@
   .fa-solid{
     font-size: 1rem;
   }
+  
+  .seccionForm{
+	background-color: rgb(225, 255, 255);
+	margin: 5px;
+  }
   :root {	  
 	  --color1: #1C3150;
 	  --color2: #DBC6C0;

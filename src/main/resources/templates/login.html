@@ -8,11 +8,14 @@
 	<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="col-3 text-end p-4 border rounded shadow">
+    <div class="col-md-4 col-sm-12 col-10 text-end p-4 border rounded shadow">
         <form method="post" th:action="@{/login}" >
-            <div class="text-center mb-4">
+            <div class="text-center p-2 mb-4">
                 <h1>Iniciar Sesión</h1>
             </div>
+			<div th:if="${error == true}">
+				<p style="color: brown;" class="fa-solid text-start" th:text="|Error al Iniciar Sesión|"></p>
+			</div>
             <div class="form-floating mb-3">
                 <input type="text" name="codigo" class="form-control" required >
                 <label for="floatingInput">Codigo Usuario</label>

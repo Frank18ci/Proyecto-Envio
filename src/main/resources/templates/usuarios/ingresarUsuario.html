@@ -32,14 +32,15 @@
 						<a class="nav-link crecer" th:href="@{/envios/registrar}">Generar Envio</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle active crecer" href="#" role="button" data-bs-toggle="dropdown"
-							aria-expanded="false">
+						<a class="nav-link dropdown-toggle active crecer" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
 							Gestion
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item crecer" th:href="@{/envios/listar}">Envios</a></li>
 							<li><a class="dropdown-item crecer" th:href="@{/clientes/listar}">Clientes</a></li>
-							<li th:if="${session.usuario.usuarioRol.rol == 'admind'}"><a class="active dropdown-item crecer" th:href="@{/usuarios/listar}">Empleados</a></li>
+							<li th:if="${session.usuario.usuarioRol.rol == 'admind'}"><a
+									class="active dropdown-item crecer" th:href="@{/usuarios/listar}">Empleados</a></li>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -56,6 +57,9 @@
 	<div class="container mt-3">
 		<h1>Registro cliente</h1>
 		<hr>
+		<div th:if="${error}">
+			<p style="color: brown;" class="fw-bold" th:text="|Error al registrar|"></p>
+		</div>
 		<div>
 			<form class="col-md-6" method="post" th:action="@{/usuarios/registrar}" th:object="${usuario}">
 				<div class="form-group  mb-3">

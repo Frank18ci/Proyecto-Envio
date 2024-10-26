@@ -30,7 +30,6 @@ public class Envio {
 	private String direccionSalida;
 	private String direccionEnvio;
 	private String telefonoContacto;
-	@Column(unique = true)
 	private String correo;
 	@ManyToOne
 	private EstadoPago estadoPago;
@@ -162,6 +161,4 @@ public class Envio {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	
-	
 }

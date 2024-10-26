@@ -87,7 +87,8 @@ public class EnvioController {
 	public String registrarUsuario(@ModelAttribute Envio envio, Model model) {
 		envio.setFechaRegistro(new Date());
 		envio.setFechaModificacion(new Date());
-		if(envioRepository.buscarCodigo(envio.getCodigo()) != null || envioRepository.buscarCorreo(envio.getCorreo()) != null) {
+		if(envioRepository.buscarCodigo(envio.getCodigo()) != null
+			) {
 			model.addAttribute("envio", envio);
 			model.addAttribute("listaEstadoEnvio", estadoEnvioRepository.findAll());
 			model.addAttribute("listaCliente", clienteRepository.findAll());
@@ -95,6 +96,7 @@ public class EnvioController {
 			model.addAttribute("listaMetodoPago", metodoPagoRepository.findAll());
 			model.addAttribute("listaTipoEnvio", tipoEnvioRepository.findAll());
 			model.addAttribute("listaUsuario", usuarioRepository.findAll());
+			model.addAttribute("error", true);
 			return "/envios/ingresarEnvio";
 		}
 		envioRepository.save(envio);

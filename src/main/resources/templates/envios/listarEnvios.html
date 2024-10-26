@@ -98,8 +98,6 @@
 					<th>Tipo envio</th>
 					<th>Estado Envio</th>
 					<th>Costo Envio</th>
-					<th>Fecha registro</th>
-					<th>Fecha modificacion</th>
 					<th>Estado</th>
 					<th></th>
 				</tr>
@@ -114,8 +112,6 @@
 					<td th:text="${e.tipoEnvio}"></td>
 					<td th:text="${e.estadoEnvio}"></td>
 					<td th:text="${e.costoEnvio}"></td>
-					<td th:text="${e.fechaRegistro}"></td>
-					<td th:text="${e.fechaModificacion}"></td>
 					<td th:text="${e.estado == true ? 'Activo' : 'Inactivo'}"></td>
 					<td class="text-center">
 						<a th:href="@{/envios/informacion/{id}(id=${e.id})}" class="btn btn-primary">

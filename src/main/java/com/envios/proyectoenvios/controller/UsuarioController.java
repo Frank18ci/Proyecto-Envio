@@ -69,6 +69,12 @@ public class UsuarioController {
 	public String registrarUsuario(@ModelAttribute Usuario usuario, Model model) {
 		usuario.setFechaRegistro(new Date());
 		usuario.setFechaModificacion(new Date());
+		if(usuarioRepository.buscarCodigo(usuario.getCodigo()) != null || 
+				usuarioRepository.buscarDNI(usuario.getDni()) != null) {
+			model.addAttribute("listaUsuarioRol", usuarioRolRepository.findAll());
+			model.addAttribute("error", true);
+			return "usuarios/ingresarUsuario";
+		}
 		usuarioRepository.save(usuario);
 		return "redirect:/usuarios/listar";
 

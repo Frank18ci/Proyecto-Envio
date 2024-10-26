@@ -64,13 +64,13 @@
     <div class="container mt-2">
       <h1>Consulta Envío</h1>
       <hr />
-      <p>Ingresa el código para realizar la consulta</p>
       <div class="row g-5">
         <div class="col-lg-4 mb-3">
           <form method="post" th:action="@{/consulta/consultar}">
             <div class="mb-3" >
               <label for="codigo" class="form-label">Código</label>
               <input
+			  	placeholder="Ingresa el código para realizar la consulta"
                 type="text"
                 class="form-control"
                 name="codigo"
@@ -152,7 +152,7 @@
         </div>
         <div class="row mt-4">
           <div class="col text-center">
-            <p>&copy; 2024 Envios Rapidos. Todos los derechos reservados.</p>
+            <p>&copy; 2024 SmartShip. Todos los derechos reservados.</p>
           </div>
         </div>
       </div>
