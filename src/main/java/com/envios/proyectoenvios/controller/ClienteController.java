@@ -33,6 +33,9 @@ public class ClienteController {
 	public String getClientes(Model model, String dni, String nombre, String apellido, Integer p, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		if(p == null) {
 			p = 0;
 		}
@@ -57,6 +60,9 @@ public class ClienteController {
 	public String informacionCliente(@PathVariable int codigo, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
 		return "/clientes/informacionCliente";
@@ -74,6 +80,9 @@ public class ClienteController {
 	public String registrarCliente(@ModelAttribute Cliente cliente, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		cliente.setFechaRegistro(new Date());
 		cliente.setFechaModificacion(new Date());
 		if(clienteRepository.buscarClienteDNI(cliente.getDni()) != null) {
@@ -89,6 +98,9 @@ public class ClienteController {
 	public String getEditar(@PathVariable int codigo, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
 		return "/clientes/editarCliente";
@@ -98,6 +110,9 @@ public class ClienteController {
 	public String editarCliente(@PathVariable int codigo, @ModelAttribute Cliente cliente, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		Cliente clienteA = clienteRepository.findById(codigo).get();
 		clienteA.setNombre(cliente.getNombre());
 		clienteA.setApellido(cliente.getApellido());
@@ -113,6 +128,9 @@ public class ClienteController {
 	public String actualizarEstudiante(@PathVariable int codigo, Model model, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
+	    if (usuario == null) {
+	        	return "redirect:/login";
+	    }            
 		clienteRepository.deleteById(codigo);
 		return "redirect:/clientes/listar";
 	}
