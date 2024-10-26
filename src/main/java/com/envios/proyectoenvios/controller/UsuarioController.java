@@ -80,7 +80,7 @@ public class UsuarioController {
 	public String getRegitrar(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		model.addAttribute("listaUsuarioRol", usuarioRolRepository.findAll());
-		return "/usuarios/ingresarUsuario";
+		return "usuarios/ingresarUsuario";
 	}
 
 	@PostMapping("/registrar")
