@@ -53,7 +53,7 @@ public class ClienteController {
 		model.addAttribute("dni", dni);
 		model.addAttribute("nombre", nombre);
 		model.addAttribute("apellido", apellido);
-		return "/clientes/listarClientes";
+		return "clientes/listarClientes";
 	}
 	
 	@GetMapping("/informacion/{codigo}")
@@ -65,7 +65,7 @@ public class ClienteController {
 	    }            
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
-		return "/clientes/informacionCliente";
+		return "clientes/informacionCliente";
 	}
 
 	@GetMapping("/registrar")
@@ -73,7 +73,7 @@ public class ClienteController {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		model.addAttribute("usuario", usuario);
 		model.addAttribute("cliente", new Cliente());
-		return "/clientes/ingresarCliente";
+		return "clientes/ingresarCliente";
 	}
 
 	@PostMapping("/registrar")
@@ -88,7 +88,7 @@ public class ClienteController {
 		if(clienteRepository.buscarClienteDNI(cliente.getDni()) != null) {
 			model.addAttribute("cliente", cliente);
 			model.addAttribute("error", true);
-			return "/clientes/ingresarCliente";
+			return "clientes/ingresarCliente";
 		}
 		clienteRepository.save(cliente);
 		return "redirect:/clientes/listar";
@@ -103,7 +103,7 @@ public class ClienteController {
 	    }            
 		Cliente cliente = clienteRepository.findById(codigo).get();
 		model.addAttribute("cliente", cliente);
-		return "/clientes/editarCliente";
+		return "clientes/editarCliente";
 	}
 
 	@PostMapping("/editar/{codigo}")
