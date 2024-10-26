@@ -102,34 +102,28 @@
 		async function busqueda(){
 			consultaDNI(inpDni.value);
 		}
-			async function consultaDNI(dni) {
+				async function consultaDNI(dni) {
 				const token = 'apis-token-9564.YM3c4yuM8lmMA0lDpDOwjCZ-PISuHaVD';
 				let url = `https://cors-anywhere.herokuapp.com/https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
 				try {
 					const response = await fetch(url, {
 						method: 'GET',
 						headers: {
-							'CURLOPT_RETURNTRANSFER': true,
-							'CURLOPT_SSL_VERIFYPEER': 0,
-							'CURLOPT_ENCODING': '',
-							'CURLOPT_MAXREDIRS': 2,
-							'CURLOPT_TIMEOUT': 0,
-							'CURLOPT_FOLLOWLOCATION': true,
-							'Authorization': `Bearer` + token
+							'Authorization': `Bearer ${token}`
 						},
-						redirect: 'follow'
 					});
 					if (!response.ok) {
 						throw new Error(`Response status: ${response.status}`);
 					}
 					const json = await response.json();
 					console.log(json);
-					inpNombre.value=json.nombres;
-					inpApellido.value=json.apellidoPaterno + ' ' + json.apellidoMaterno;
+					inpNombre.value = json.nombres;
+					inpApellido.value = json.apellidoPaterno + ' ' + json.apellidoMaterno;
 				} catch (error) {
 					console.error(error.message);
+					}	
 				}
-			}
+
 	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
