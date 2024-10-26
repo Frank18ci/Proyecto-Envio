@@ -44,7 +44,7 @@ public class UsuarioController {
 		model.addAttribute("dni", dni);
 		model.addAttribute("id", id);
 		model.addAttribute("nombre", nombre);
-		return "/usuarios/listarUsuarios";
+		return "usuarios/listarUsuarios";
 	}
 
 	@GetMapping("/informacion/{id}")
@@ -52,7 +52,7 @@ public class UsuarioController {
 		VistaUsuario usuario = usuarioRepository.buscarUsuario(id);
 		System.out.println(usuario.toString());
 		model.addAttribute("usuario", usuario);
-		return "/usuarios/informacionUsuario";
+		return "usuarios/informacionUsuario";
 	}
 	
 	@Autowired
@@ -85,7 +85,7 @@ public class UsuarioController {
 		Usuario usuario = usuarioRepository.findById(id).get();
 		model.addAttribute("listaUsuarioRol", usuarioRolRepository.findAll());
 		model.addAttribute("usuario", usuario);
-		return "/usuarios/editarUsuario";
+		return "usuarios/editarUsuario";
 	}
 
 	@PostMapping("/editar/{id}")

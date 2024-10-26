@@ -63,13 +63,13 @@ public class EnvioController {
 		model.addAttribute("descripcion", descripcion);
 		model.addAttribute("estadoEnvio", estadoEnvio);
 		model.addAttribute("listaEstadoEnvio", estadoEnvioRepository.findAll());
-		return "/envios/listarEnvios";
+		return "envios/listarEnvios";
 	}
 	@GetMapping("/informacion/{id}")
 	public String informacionCliente(@PathVariable int id, Model model) {
 		VistaEnvio envio = envioRepository.buscarEnvio(id);
 		model.addAttribute("envio", envio);
-		return "/envios/informacionEnvio";
+		return "envios/informacionEnvio";
 	}
 
 	@GetMapping("/registrar")
@@ -114,7 +114,7 @@ public class EnvioController {
 		model.addAttribute("listaTipoEnvio", tipoEnvioRepository.findAll());
 		model.addAttribute("listaUsuario", usuarioRepository.findAll());
 		model.addAttribute("envio", envio);
-		return "/envios/editarEnvio";
+		return "envios/editarEnvio";
 	}
 
 	@PostMapping("/editar/{id}")
