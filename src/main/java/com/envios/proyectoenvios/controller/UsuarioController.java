@@ -1,9 +1,17 @@
 package com.envios.proyectoenvios.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +19,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.envios.proyectoenvios.model.Usuario;
 import com.envios.proyectoenvios.model.VistaUsuario;
 import com.envios.proyectoenvios.repository.IUsuarioRepository;
 import com.envios.proyectoenvios.repository.IUsuarioRolRepository;
 import com.envios.proyectoenvios.service.UsuarioService;
+
+import jakarta.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -109,4 +127,21 @@ public class UsuarioController {
 		return "redirect:/usuarios/listar";
 	}
 
+	
+	@Autowired
+    private JdbcTemplate jdbcTemplate;
+@RequestMapping(value = "/UsuarioReport", method = RequestMethod.GET)
+@ResponseBody
+public void PacienteReport(HttpServletResponse response) throws JRException, IOException, SQLException {
+    Connection connection = jdbcTemplate.getDataSource().getConnection();
+    InputStream jasperStream = this.getClass().getResourceAsStream("/reporte/ReporteUsuarios.jasper");
+    Map<String, Object> params = new HashMap<String, Object>();
+    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+    response.setContentType("application/x-pdf");
+    response.setHeader("Content-disposition", "inline; filename=reporteUsuarios.pdf");
+    final OutputStream outputStream = response.getOutputStream();
+    JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+    connection.close();
+}
 }

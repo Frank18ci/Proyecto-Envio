@@ -1,9 +1,17 @@
 package com.envios.proyectoenvios.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.envios.proyectoenvios.model.Envio;
 import com.envios.proyectoenvios.model.VistaEnvio;
@@ -22,6 +32,14 @@ import com.envios.proyectoenvios.repository.IMetodoPagoRepository;
 import com.envios.proyectoenvios.repository.ITipoEnvioRepository;
 import com.envios.proyectoenvios.repository.IUsuarioRepository;
 import com.envios.proyectoenvios.service.EnvioService;
+
+import jakarta.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 @RequestMapping("/envios")
@@ -100,7 +118,7 @@ public class EnvioController {
 			return "/envios/ingresarEnvio";
 		}
 		envioRepository.save(envio);
-		return "redirect:envios/listar";
+		return "redirect:listar";
 
 	}
 	
@@ -145,4 +163,21 @@ public class EnvioController {
 		envioRepository.deleteById(id);
 		return "redirect:envios/listar";
 	}
+	
+	@Autowired
+    private JdbcTemplate jdbcTemplate;
+@RequestMapping(value = "/EnvioReport", method = RequestMethod.GET)
+@ResponseBody
+public void PacienteReport(HttpServletResponse response) throws JRException, IOException, SQLException {
+    Connection connection = jdbcTemplate.getDataSource().getConnection();
+    InputStream jasperStream = this.getClass().getResourceAsStream("/reporte/ReporteEnvios.jasper");
+    Map<String, Object> params = new HashMap<String, Object>();
+    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+    response.setContentType("application/x-pdf");
+    response.setHeader("Content-disposition", "inline; filename=reporteEnvios.pdf");
+    final OutputStream outputStream = response.getOutputStream();
+    JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+    connection.close();
+}
 }
