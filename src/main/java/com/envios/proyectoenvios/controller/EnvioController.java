@@ -81,7 +81,7 @@ public class EnvioController {
 		model.addAttribute("listaMetodoPago", metodoPagoRepository.findAll());
 		model.addAttribute("listaTipoEnvio", tipoEnvioRepository.findAll());
 		model.addAttribute("listaUsuario", usuarioRepository.findAll());
-		return "/envios/ingresarEnvio";
+		return "envios/ingresarEnvio";
 	}
 	@PostMapping("/registrar")
 	public String registrarUsuario(@ModelAttribute Envio envio, Model model) {
@@ -100,7 +100,7 @@ public class EnvioController {
 			return "/envios/ingresarEnvio";
 		}
 		envioRepository.save(envio);
-		return "redirect:/envios/listar";
+		return "redirect:envios/listar";
 
 	}
 	
@@ -143,6 +143,6 @@ public class EnvioController {
 	@GetMapping("/eliminar/{id}")
 	public String actualizarEstudiante(@PathVariable int id) {
 		envioRepository.deleteById(id);
-		return "redirect:/envios/listar";
+		return "redirect:envios/listar";
 	}
 }

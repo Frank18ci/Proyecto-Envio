@@ -18,7 +18,7 @@ public class ConsultaController {
 	
 	@GetMapping("/consultar")
 	public String getConsultar(Model model) {
-		return "/consulta/ConsultarEnvios";
+		return "consulta/ConsultarEnvios";
 	}
 	
 	@PostMapping("/consultar")
@@ -26,6 +26,6 @@ public class ConsultaController {
 		Envio envio =  envioRepository.buscarCodigo(codigo);
 		model.addAttribute("codigo", codigo);
 		model.addAttribute("envio", envio);
-		return "/consulta/ConsultarEnvios";
+		return "consulta/ConsultarEnvios";
 	}
 }
