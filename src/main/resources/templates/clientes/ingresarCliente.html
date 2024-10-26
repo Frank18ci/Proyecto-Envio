@@ -102,23 +102,27 @@
 		async function busqueda(){
 			consultaDNI(inpDni.value);
 		}
-		async function consultaDNI(dni) {
-			let url = `https://proyectoenvio-htexh6ced7h2ffa5.eastus-01.azurewebsites.net/proxy/dni?numero=${dni}`;
-			try {
-				const response = await fetch(url, {
-					method: 'GET',
-				});
-				if (!response.ok) {
-					throw new Error(`Response status: ${response.status}`);
+				async function consultaDNI(dni) {
+				const token = 'apis-token-9564.YM3c4yuM8lmMA0lDpDOwjCZ-PISuHaVD';
+				let url = `https://cors-anywhere.herokuapp.com/https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
+				try {
+					const response = await fetch(url, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						},
+					});
+					if (!response.ok) {
+						throw new Error(`Response status: ${response.status}`);
+					}
+					const json = await response.json();
+					console.log(json);
+					inpNombre.value = json.nombres;
+					inpApellido.value = json.apellidoPaterno + ' ' + json.apellidoMaterno;
+				} catch (error) {
+					console.error(error.message);
+					}	
 				}
-				const json = await response.json();
-				console.log(json);
-				inpNombre.value = json.nombres;
-				inpApellido.value = json.apellidoPaterno + ' ' + json.apellidoMaterno;
-			} catch (error) {
-				console.error(error.message);
-			}
-		}
 
 	</script>
 
