@@ -104,7 +104,7 @@
 		}
 			async function consultaDNI(dni) {
 				const token = 'apis-token-9564.YM3c4yuM8lmMA0lDpDOwjCZ-PISuHaVD';
-				let url = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
+				let url = `https://cors-anywhere.herokuapp.com/https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
 				try {
 					const response = await fetch(url, {
 						method: 'GET',
