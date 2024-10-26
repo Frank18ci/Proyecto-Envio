@@ -161,7 +161,7 @@ public class EnvioController {
 	@GetMapping("/eliminar/{id}")
 	public String actualizarEstudiante(@PathVariable int id) {
 		envioRepository.deleteById(id);
-		return "redirect:envios/listar";
+		return "redirect:/envios/listar";
 	}
 	
 	@Autowired
